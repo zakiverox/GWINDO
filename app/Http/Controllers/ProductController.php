@@ -106,6 +106,7 @@ class ProductController extends ApiController
        return $product_img;
         }
     }
+    //aslknsaknsa
 
     /**
      * Store a newly created resource in storage.
