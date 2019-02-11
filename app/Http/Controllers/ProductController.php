@@ -129,7 +129,7 @@ class ProductController extends ApiController
 
     /**
      * Display the specified resource.
-     *ssssss
+     *sssssssfdsfcdf
      * @param  \App\cr  $cr
      * @return \Illuminate\Http\Response
      */
