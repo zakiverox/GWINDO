@@ -11,6 +11,7 @@ class ProductTransformer extends TransformerAbstract
 {
     public function transform(Product $pro)
     {
+        
         return [
             'Product_id'    => $pro->id,
             'Title'    => $pro->title,
@@ -21,4 +22,5 @@ class ProductTransformer extends TransformerAbstract
             
         ];
     }
+    
 }

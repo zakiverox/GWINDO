@@ -18,12 +18,22 @@ use App\Fasilitas;
 
 class ProductController extends ApiController 
 {
+
     use Helpers;
+
+    public function __construct() {
+        parent::__construct();
+
+        $this->middleware('transform.input:' . ProductTransformer::class);
+    }
+
     /**
      * Display a listing of the resource.
      *
      * @return \Illuminate\Http\Response
      */
+  
+    
     public function index()
     {
         //
@@ -71,7 +81,7 @@ class ProductController extends ApiController
        $ct = Category::where('name', $category)->first();
      
       $product->categorys()->attach($ct);
-       return $this->successResponse($product, 201);
+       return $this->showAll($product, 201);
 
         
     }
@@ -121,10 +131,10 @@ class ProductController extends ApiController
                    }
                    
              
-                   $c = Product::all();
+                   $products = Product::all();
                   
 
-                   return $this->response->collection($c, new ProductTransformer)->setStatusCode(200);
+                   return $this->showAll($products);
     }
 
     /**
