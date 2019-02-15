@@ -68,7 +68,7 @@ trait ApiResponser {
 		];
 		Validator::validate(request()->all(), $rules);
 
-		$perPage = 15;
+		$perPage = 12;
         if (request()->has('per_page')) {
 			$perPage = (int) request()->per_page;
 		}

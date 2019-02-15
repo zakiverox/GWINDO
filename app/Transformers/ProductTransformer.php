@@ -11,7 +11,6 @@ class ProductTransformer extends TransformerAbstract
 {
     public function transform(Product $pro)
     {
-        
         return [
             'Product_id'    => $pro->id,
             'Title'    => $pro->title,
@@ -22,5 +21,26 @@ class ProductTransformer extends TransformerAbstract
             
         ];
     }
-    
+    public static function originalAttribute($att) {
+        $attributes =  [
+            'Product_id'   => 'id',
+            'title'        => 'name',
+            'deskripsi_Pribadi'      => 'description',
+           
+           
+        ];
+
+        return isset($attributes[$att]) ? $attributes[$att] : null;
+    }
+
+    public static function transformedAttribute($att) {
+        $attributes =  [
+            'id'          => "identifier",
+            'name'        => "title",
+            'description' => "details",
+         
+        ];
+
+        return isset($attributes[$att]) ? $attributes[$att] : null;
+    }
 }

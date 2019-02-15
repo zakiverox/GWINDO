@@ -15,8 +15,9 @@ use Illuminate\Foundation\Exceptions\Handler as ExceptionHandler;
 
 class Handler extends ExceptionHandler
 {
+    use ApiResponser;
     /**
-     * A list of the exception types that are not reported.
+     * A list of the exception types that should not be reported.
      *
      * @var array
      */
@@ -41,6 +42,8 @@ class Handler extends ExceptionHandler
     /**
      * Report or log an exception.
      *
+     * This is a great spot to send exceptions to Sentry, Bugsnag, etc.
+     *
      * @param  \Exception  $exception
      * @return void
      */
@@ -58,7 +61,6 @@ class Handler extends ExceptionHandler
      */
     public function render($request, Exception $exception)
     {
-        
         if ($exception instanceof ValidationException) {
             return $this->convertValidationExceptionToResponse($exception, $request);
         } 

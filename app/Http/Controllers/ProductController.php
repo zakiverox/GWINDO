@@ -54,6 +54,7 @@ class ProductController extends ApiController
             'fasilitas' => 'required',
            
         ];
+      
 
         $this->validate($request, $rules);
 
@@ -81,7 +82,7 @@ class ProductController extends ApiController
        $ct = Category::where('name', $category)->first();
      
       $product->categorys()->attach($ct);
-       return $this->showAll($product, 201);
+       return $this->showOne($product, 201);
 
         
     }
@@ -107,7 +108,7 @@ class ProductController extends ApiController
 
             $product_img = Image::create([
                 'name' =>  $filename,       
-                'link' => url("img/{$filename}"),
+                'link' => ("img/{$filename}"),
                 'product_id' =>  $product,
                 
                ]);      
@@ -133,7 +134,7 @@ class ProductController extends ApiController
              
                    $products = Product::all();
                   
-
+                  
                    return $this->showAll($products);
     }
 
