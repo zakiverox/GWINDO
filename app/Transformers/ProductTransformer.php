@@ -2,25 +2,55 @@
 namespace App\Transformers;
 
 use App\User;
-use App\profile;
-use League\Fractal\TransformerAbstract;
 use App\Product;
+use App\profile;
 use Faker\Provider\Image;
+use League\Fractal\Manager;
+use League\Fractal\TransformerAbstract;
+use App\Traits\NoDataArraySerializer;
 
 class ProductTransformer extends TransformerAbstract
 {
+  
+   
+    protected $defaultIncludes = [];
     public function transform(Product $pro)
     {
-        return [
+        
+        
+        $name = $pro->images->first();
+       return [
             'Product_id'    => $pro->id,
-            'Title'    => $pro->title,
-            'deskripsi_Pribadi' => $pro->description,
-            'category' => $pro->categorys,
-            'foto' => $pro->images,
-            'fasilitas' => $pro->fasilitas,
-            
+            'title'    => $pro->title,
+            'deskripsi_Pribadi' => $pro->description,       
+           'users'=> [ 'id' =>$pro->user->id,
+                         'user' => $pro->user->name,
+                        'detail'=>['name'=>$pro->user->profile->first_name.' '. $pro->user->profile->lastt_name,
+                        'foto'=> $pro->user->profile->foto]                                    
+                    ],
+                    'category'=>$pro->categorys->map(function ($cat) {
+                        return [
+                            'cateory_id' => $cat->id,
+                            'name' => $cat->name
+                        ];
+                    }),
+                    'image'=>$name,
+         'detail'=>$pro->fasilitas->map(function ($cat) {
+            return [
+                'fasilitas' => $cat->fasilitas,
+                'exclude' => $cat->exclude,
+                'acara' => $cat->acara,
+                'transport' => $cat->transport,
+            ];
+        }),
+          
+           
         ];
     }
+
+   
+    
+
     public static function originalAttribute($att) {
         $attributes =  [
             'Product_id'   => 'id',
@@ -35,9 +65,9 @@ class ProductTransformer extends TransformerAbstract
 
     public static function transformedAttribute($att) {
         $attributes =  [
-            'id'          => "identifier",
+            'id'          => "Product_id",
             'name'        => "title",
-            'description' => "details",
+            'description' => "deskripsi_Pribadi",
          
         ];
 

@@ -44,7 +44,7 @@ class Product extends Model
 
     public function user()
     {
-        return $this->belongsTo('App\category');
+        return $this->belongsTo('App\user');
     }
    
 }

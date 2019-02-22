@@ -15,6 +15,7 @@ $app = new Illuminate\Foundation\Application(
     $_ENV['APP_BASE_PATH'] ?? dirname(__DIR__)
 );
 
+
 /*
 |--------------------------------------------------------------------------
 | Bind Important Interfaces
@@ -53,3 +54,9 @@ $app->singleton(
 */
 
 return $app;
+
+$app['Dingo\Api\Transformer\Factory']->setAdapter(function ($app) {
+    $fractal = new League\Fractal\Manager;
+    $fractal->setSerializer(new App\Traits\NoDataArraySerializer);
+    return new Dingo\Api\Transformer\Adapter\Fractal($fractal);
+});

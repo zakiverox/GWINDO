@@ -27,12 +27,14 @@ $api->version('v1', function ($api) {
     $api->post('logout', 'App\Http\Controllers\Auth\LoginController@logout');
 });
 
-$api->version('v1',['middleware' => 'jwt.auth', 'jwt.refresh'] ,function ($api) {
+$api->version('v1',['middleware' => 'jwt.auth', 'jwt.refresh','transform.input'] ,function ($api) {
     $api->get('user', 'App\Http\Controllers\Auth\LoginController@show');
     $api->get('token', 'App\Http\Controllers\Auth\LoginController@getToken');
     $api->get('profile', 'App\Http\Controllers\Auth\LoginController@profile');
-    $api->post('product', 'App\Http\Controllers\ProductController@create');
-    $api->post('product/{product_id}/upload', 'App\Http\Controllers\ProductController@uploadimages');
-    $api->get('product', 'App\Http\Controllers\ProductController@store');
-
+    //Product
+    $api->post('product', 'App\Http\Controllers\product\ProductController@create');
+    $api->post('product/{product_id}/upload', 'App\Http\Controllers\product\ProductController@uploadimages');
+    $api->get('product', 'App\Http\Controllers\product\ProductController@index');
+    $api->get('product/{product_id}', 'App\Http\Controllers\product\ProductController@show');
+    ///==========================================================================================================
 });

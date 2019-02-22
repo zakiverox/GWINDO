@@ -2,19 +2,32 @@
 
 namespace App\Traits;
 
+use League\Fractal\Manager;
 use Illuminate\Support\Collection;
 use Illuminate\Support\Facades\Cache;
 use Illuminate\Database\Eloquent\Model;
+use Spatie\Fractalistic\ArraySerializer;
 use Illuminate\Support\Facades\Validator;
 use Illuminate\Pagination\LengthAwarePaginator;
 
 trait ApiResponser {
     protected function successResponse($data, $code) {
-        return response()->json($data, $code);
+        $data1 = [
+            'sucsses' => true,
+            'code' => $code,
+            'details' => $data                   
+            
+        ];
+
+        return response()->json($data1, $code);
     }
 
     protected function errorResponse($message, $code) {
-        return response()->json(['error' => $message, 'code' => $code], $code);
+        return response()->json([
+            'sucsses' => false,
+            'code' => $code,
+            'error' => $message, 
+        ], $code);
     }
 
     protected function showAll(Collection $collection, $code = 200) {
@@ -25,6 +38,7 @@ trait ApiResponser {
             $collection  = $this->paginate($collection);
             $collection  = $this->transformData($collection, $transformer);
             $collection  = $this->cacheResponse($collection);
+                        
             return $this->successResponse($collection, $code);
         }
         //fractal includes 'data' by itself so add only on empty collection
@@ -87,6 +101,7 @@ trait ApiResponser {
 	}
 
     protected function transformData($data, $transformer) {
+        
 		$transformation = fractal($data, new $transformer);
         
 		return $transformation->toArray();

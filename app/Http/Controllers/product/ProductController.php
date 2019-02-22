@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Http\Controllers;
+namespace App\Http\Controllers\product;
 
 use App\cr;
 use App\User;
@@ -20,12 +20,7 @@ class ProductController extends ApiController
 {
 
     use Helpers;
-
-    public function __construct() {
-        parent::__construct();
-
-        $this->middleware('transform.input:' . ProductTransformer::class);
-    }
+   
 
     /**
      * Display a listing of the resource.
@@ -36,7 +31,17 @@ class ProductController extends ApiController
     
     public function index()
     {
-        //
+        
+        if (!$user = JWTAuth::parseToken()->authenticate()) {
+            return response()->json(['user_not_found'], 404);
+                   }
+                   
+             
+                   $products = Product::all();
+                  
+                  
+                   return $this->showAll($products);
+                   
     }
 
     /**
@@ -117,69 +122,26 @@ class ProductController extends ApiController
        return $product_img;
         }
     }
-    //aslknsaknsa
-
-    /**
-     * Store a newly created resource in storage.
-     *
-     * @param  \Illuminate\Http\Request  $request
-     * @return \Illuminate\Http\Response
-     */
-    public function store(Request $request)
-    {
-        if (!$user = JWTAuth::parseToken()->authenticate()) {
-            return response()->json(['user_not_found'], 404);
-                   }
-                   
-             
-                   $products = Product::all();
-                  
-                  
-                   return $this->showAll($products);
-    }
+  
 
     /**
      * Display the specified resource.
      *sssssssfdsfcdf
-     * @param  \App\cr  $cr
+     * @param  \App\product  $product
      * @return \Illuminate\Http\Response
      */
-    public function show(cr $cr)
+    public function show( $product_id)
     {
-        //
+        $products= Product::find($product_id);
+        if($products == null)
+        {
+            return $this->errorResponse("'Product not Found'",401);
+        }
+        
+        return $this->showOne($products);
     }
 
-    /**
-     * Show the form for editing the specified resource.
-     *
-     * @param  \App\cr  $cr
-     * @return \Illuminate\Http\Response
-     */
-    public function edit(cr $cr)
-    {
-        //
-    }
+  
 
-    /**
-     * Update the specified resource in storage.
-     *
-     * @param  \Illuminate\Http\Request  $request
-     * @param  \App\cr  $cr
-     * @return \Illuminate\Http\Response
-     */
-    public function update(Request $request, cr $cr)
-    {
-        //
-    }
-
-    /**
-     * Remove the specified resource from storage.
-     *
-     * @param  \App\cr  $cr
-     * @return \Illuminate\Http\Response
-     */
-    public function destroy(cr $cr)
-    {
-        //
-    }
+  
 }
