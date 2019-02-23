@@ -79,8 +79,7 @@ class ProductController extends ApiController
         array('fasilitas'=>$request->fasilitas3,'product_id' => $product->id),
        );
     
-       
-       $fasilitas = Fasilitas::insert($data);  
+        Fasilitas::insert($data);  
     
     
        
@@ -135,7 +134,7 @@ class ProductController extends ApiController
         $products= Product::find($product_id);
         if($products == null)
         {
-            return $this->errorResponse("'Product not Found'",401);
+            return $this->errorResponse("Product not Found",401);
         }
         
         return $this->showOne($products);

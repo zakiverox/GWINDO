@@ -30,11 +30,23 @@ $api->version('v1', function ($api) {
 $api->version('v1',['middleware' => 'jwt.auth', 'jwt.refresh','transform.input'] ,function ($api) {
     $api->get('user', 'App\Http\Controllers\Auth\LoginController@show');
     $api->get('token', 'App\Http\Controllers\Auth\LoginController@getToken');
-    $api->get('profile', 'App\Http\Controllers\Auth\LoginController@profile');
+    
     //Product
-    $api->post('product', 'App\Http\Controllers\product\ProductController@create');
-    $api->post('product/{product_id}/upload', 'App\Http\Controllers\product\ProductController@uploadimages');
-    $api->get('product', 'App\Http\Controllers\product\ProductController@index');
-    $api->get('product/{product_id}', 'App\Http\Controllers\product\ProductController@show');
+  
+    
+   
+  
+  
+    ///==========================================================================================================
+
+    //Guide
+
+    $api->put('guide/profile','App\Http\Controllers\Guide\GuidePrfolieController@update');//ok
+    $api->post('guide/product', 'App\Http\Controllers\product\ProductController@create');//ok
+    $api->post('guide/product/{product_id}/upload', 'App\Http\Controllers\product\ProductController@uploadimages');//ok
+    $api->get('guide/profile','App\Http\Controllers\Guide\GuidePrfolieController@index');//ok
+    $api->get('guide/product/{product_id}', 'App\Http\Controllers\product\ProductController@show');//ok
+    $api->get('guide/product', 'App\Http\Controllers\product\ProductController@index');//ok
+
     ///==========================================================================================================
 });

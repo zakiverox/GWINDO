@@ -2,16 +2,18 @@
 
 namespace App;
 
+use App\Transformers\UserTransformer;
+use Illuminate\Database\Eloquent\Model;
 use Illuminate\Notifications\Notifiable;
 use Zizaco\Entrust\Traits\EntrustUserTrait;
 use Illuminate\Contracts\Auth\MustVerifyEmail;
 use Illuminate\Foundation\Auth\User as Authenticatable;
-use Illuminate\Database\Eloquent\Model;
+
 class User extends Authenticatable
 {
     
     use Notifiable,EntrustUserTrait;
-
+    public $transformer = UserTransformer::class;
     /**
      * The attributes that are mass assignable.
      *

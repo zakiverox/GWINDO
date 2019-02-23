@@ -109,14 +109,7 @@ public function getToken()
 }
 public function profile()
 {
-    if (!$user = JWTAuth::parseToken()->authenticate()) {
-        return response()->json(['user_not_found'], 404);
-               }
-            $user1 = User::find($user->id);
-           
-          
-
-            return $this->response->item($user, new UserTransformer)->setStatusCode(200);
+    
 
 
    

@@ -5,7 +5,7 @@ use League\Fractal\TransformerAbstract;
 use App\User;
 class UserTransformer extends TransformerAbstract
 {
-    protected $defaultIncludes = ['profile','role'];
+    protected $defaultIncludes = [];
 
 
     public function transform(User $user)
@@ -14,6 +14,12 @@ class UserTransformer extends TransformerAbstract
             'User_id'    => $user->id,
             'User_name'    => $user->name,
             'User_email'    => $user->email,   
+            'profile'=> [
+                        'nama_lengkap'=>$user->profile->first_name .' '. $user->profile->lastt_name ,
+                        'telepon'=>$user->profile->phone,
+                        'jk'=>$user->profile->jk,
+                        'alamat'=>$user->profile->alamat],
+            
             
               
              
